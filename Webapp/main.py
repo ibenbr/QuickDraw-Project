@@ -25,7 +25,7 @@ def load_model():
 def draw_it(strokes):
     image = Image.new("P", (256,256), color=255)
     image_draw = ImageDraw.Draw(image)
-    for stroke in ast.literal_eval(strokes):
+    for stroke in strokes:
         for i in range(len(stroke[0])-1):
             image_draw.line([stroke[0][i], 
                              stroke[1][i],
@@ -36,9 +36,10 @@ def draw_it(strokes):
     return np.array(image)/255.
 
 #transform the data
-def testArray():
+def testArray(drawingXY):
     test_grand = []
-    test = pd.read_csv('Webapp/input.csv', usecols=['drawing'], nrows=1).head(1)
+    list = {'drawing':[drawingXY]}
+    test = pd.DataFrame(list)
     imagebag = bag.from_sequence(test.drawing.values).map(draw_it) 
     testarray = np.array(imagebag.compute())  # PARALLELIZE
     testarray = np.reshape(testarray, (1, -1))    
@@ -87,8 +88,8 @@ def ConvertStroke(inputList):
     return drawing
 
 # predicting the correct category
-def predict():
-    test_grand = testArray()
+def predict(insertedfigure):
+    test_grand = testArray(insertedfigure)
     y_test, X_test = SplitData(test_grand, 100)
     model = load_model()
     l=os.listdir('Data/'+str(100)+'_Categories/trainset')
@@ -134,14 +135,9 @@ if canvas_result.json_data is not None:
         temp = this[x]['path']
         newStroke = ConvertStroke(temp)
         figure.append(newStroke)
-    #figure = rdp(figure, epsilon=2)
-    os.remove("webapp/input.csv")
-    with open('webapp/input.csv', 'a', newline='') as f: 
-        write = csv.writer(f) 
-        write.writerow(['drawing'])
-        write.writerow([figure])
+
     if len(this) is not 0:
         with st.spinner("Hold on, I'm predicting..."):
-            predicted_class, probability = predict()
+            predicted_class, probability = predict(figure)
             st.title(str(predicted_class)+" | "+str(probability)+" % certainty.")
             st.success('Done!')
