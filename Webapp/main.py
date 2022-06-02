@@ -94,6 +94,7 @@ def predict(insertedfigure):
     model = load_model()
     l=os.listdir('Data/'+str(100)+'_Categories/trainset')
     labels=[x.split('.')[0] for x in l]
+    labels=sorted(labels)
     prediction = model.predict(X_test)
     predicted_class = labels[np.argmax(prediction)]
     percentage = round(np.amax(prediction)*100,2)
@@ -101,10 +102,9 @@ def predict(insertedfigure):
 
 l=os.listdir('Data/'+str(100)+'_Categories/trainset')
 labels=[x.split('.')[0] for x in l]
-labels = labels.sort()
 with st.sidebar:
     with st.echo():
-        st.write(labels)
+        st.write(sorted(labels))
 # Specify canvas parameters in application
 drawing_mode = "freedraw"
 
