@@ -101,6 +101,7 @@ def predict(insertedfigure):
 
 l=os.listdir('Data/'+str(100)+'_Categories/trainset')
 labels=[x.split('.')[0] for x in l]
+labels = labels.sort()
 with st.sidebar:
     with st.echo():
         st.write(labels)
