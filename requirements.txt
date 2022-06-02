@@ -2,7 +2,6 @@ pydeck==0.7.1
 Pygments==2.12.0
 pyls-spyder==0.4.0
 Pympler==1.0.1
-pyodbc===4.0.0-unsupported
 pyparsing==3.0.9
 pypng==0.0.21
 pyreadline==2.1
