@@ -8,7 +8,7 @@ def model(classes):
         layers.RandomZoom(0.2),
     ])
 
-    inputs = keras.Input(shape=(32,32,1))
+    inputs = keras.Input(shape=(64,64,1))
     x = data_augmentation(inputs)
 
     x = layers.Conv2D(filters=16, kernel_size=3, padding='same', activation="relu")(x)
@@ -34,7 +34,7 @@ def model(classes):
     x = layers.Flatten()(x)
 
     x = layers.Dense(512, activation='relu')(x)
-    x = layers.Dropout(0.2)(x)
+    x = layers.Dropout(0.15)(x)
 
     outputs = layers.Dense(classes, activation="softmax")(x)
     model = keras.Model(inputs=inputs, outputs=outputs)
