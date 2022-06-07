@@ -15,12 +15,19 @@ import os
 import csv
 import time
 imheight, imwidth = 64, 64  
+
 #loading the model
 def load_model():
     model = keras.models.load_model('Webapp/model/100_Categories_Model.h5')
     return model
 
 st.sidebar.write("Note: don't draw too small, use the canvas as much as possible.")
+
+st.sidebar.write("**Available Categories:**")
+l=os.listdir('Data/100_Categories/trainset')
+labels=[x.split('.')[0] for x in l]
+st.sidebar.write(sorted(labels))
+
 #transform the data
 def draw_it(strokes):
     image = Image.new("P", (256,256), color=255)
@@ -100,12 +107,6 @@ def predict(insertedfigure):
     percentage = round(np.amax(prediction)*100,2)
     return predicted_class, percentage
 
-realtime_update = st.sidebar.checkbox("Update in realtime", True)
-
-l=os.listdir('Data/'+str(100)+'_Categories/trainset')
-labels=[x.split('.')[0] for x in l]
-with st.sidebar:
-    st.write("**Available Categories**",sorted(labels))
 # Specify canvas parameters in application
 drawing_mode = "freedraw"
 
@@ -120,7 +121,7 @@ canvas_result = st_canvas(
     stroke_color="black",
     background_color="white",
     stroke_width=1,
-    update_streamlit=realtime_update,
+    update_streamlit=True,
     height=384,
     width=384,
     drawing_mode="freedraw",
