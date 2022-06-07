@@ -122,8 +122,8 @@ canvas_result = st_canvas(
     background_color="white",
     stroke_width=1,
     update_streamlit=realtime_update,
-    height=512,
-    width=512,
+    height=384,
+    width=384,
     drawing_mode="freedraw",
     point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
     key="canvas",
@@ -135,7 +135,7 @@ if canvas_result.json_data is not None:
     for x in range(len(this)):
         temp = this[x]['path']
         newStroke = ConvertStroke(temp)
-        newStroke = [[item / 2 for item in subl] for subl in newStroke]
+        newStroke = [[item / 1.5 for item in subl] for subl in newStroke]
         figure.append(newStroke)
 
     if len(this) != 0:
