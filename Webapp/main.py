@@ -100,18 +100,17 @@ def predict(insertedfigure):
     percentage = round(np.amax(prediction)*100,2)
     return predicted_class, percentage
 
+realtime_update = st.sidebar.checkbox("Update in realtime", False)
+
 l=os.listdir('Data/'+str(100)+'_Categories/trainset')
 labels=[x.split('.')[0] for x in l]
 with st.sidebar:
-    with st.echo():
-        st.write(sorted(labels))
+    st.write("**Available Categories**",sorted(labels))
 # Specify canvas parameters in application
 drawing_mode = "freedraw"
 
 if drawing_mode == 'point':
     point_display_radius = st.sidebar.slider("Point display radius: ", 1, 1, 3)
-
-realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
 
 
@@ -122,8 +121,8 @@ canvas_result = st_canvas(
     background_color="white",
     stroke_width=1,
     update_streamlit=realtime_update,
-    height=256,
-    width=256,
+    height=512,
+    width=512,
     drawing_mode="freedraw",
     point_display_radius=point_display_radius if drawing_mode == 'point' else 0,
     key="canvas",
@@ -135,6 +134,7 @@ if canvas_result.json_data is not None:
     for x in range(len(this)):
         temp = this[x]['path']
         newStroke = ConvertStroke(temp)
+        newStroke = [[item / 2 for item in subl] for subl in newStroke]
         figure.append(newStroke)
 
     if len(this) is not 0:
