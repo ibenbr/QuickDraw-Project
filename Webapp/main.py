@@ -20,8 +20,7 @@ def load_model():
     model = keras.models.load_model('Webapp/model/100_Categories_Model.h5')
     return model
 
-st.write("Don't draw too small, use the canvas as much as possible.")
-st.write("The available categories are displayed on your left.")
+st.sidebar.write("Note: don't draw too small, use the canvas as much as possible.")
 #transform the data
 def draw_it(strokes):
     image = Image.new("P", (256,256), color=255)
