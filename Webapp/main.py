@@ -138,7 +138,7 @@ if canvas_result.json_data is not None:
         newStroke = [[item / 2 for item in subl] for subl in newStroke]
         figure.append(newStroke)
 
-    if len(this) is not 0:
+    if len(this) != 0:
         with st.spinner("Hold on, I'm predicting..."):
             predicted_class, probability = predict(figure)
             st.title(str(predicted_class)+" | "+str(probability)+" % certainty.")
