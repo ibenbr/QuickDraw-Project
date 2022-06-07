@@ -20,7 +20,8 @@ def load_model():
     model = keras.models.load_model('Webapp/model/100_Categories_Model.h5')
     return model
 
-
+st.write("Don't draw too small, use the canvas as much as possible.")
+st.write("The available categories are displayed on your left.")
 #transform the data
 def draw_it(strokes):
     image = Image.new("P", (256,256), color=255)
@@ -100,7 +101,7 @@ def predict(insertedfigure):
     percentage = round(np.amax(prediction)*100,2)
     return predicted_class, percentage
 
-realtime_update = st.sidebar.checkbox("Update in realtime", False)
+realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
 l=os.listdir('Data/'+str(100)+'_Categories/trainset')
 labels=[x.split('.')[0] for x in l]
